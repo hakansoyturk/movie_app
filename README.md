@@ -21,7 +21,7 @@ Viewing information about movies, filtering movies and adding desired movies to 
 
 ## Work Plan Table
 
-![image](https://user-images.githubusercontent.com/61617734/143089703-ad76cd3e-69aa-48a6-ac7d-720cbce63f1d.png)
+![image](https://user-images.githubusercontent.com/61617734/143285120-c9f5556c-d33b-4489-a7e1-01c4beac537e.png)
 
 Task distributions are shown below(According to <b>Work Plan Table</b>)
 
