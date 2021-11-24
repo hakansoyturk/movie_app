@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "829966759627",
+    "firebase_url": "https://movieapp-mobileprogramming-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "movieapp-mobileprogramming",
+    "storage_bucket": "movieapp-mobileprogramming.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829966759627:android:7b51ab2eb5814613ee0d4e",
+        "android_client_info": {
+          "package_name": "com.flutter.movieapp.movie_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "829966759627-kpqrakf4nd0uiboo1u54lfuathrtnga1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtlVnK1Q2eeL-dNYq-DVMMuEA6PeYQbIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "829966759627-kpqrakf4nd0uiboo1u54lfuathrtnga1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
