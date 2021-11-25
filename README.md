@@ -25,9 +25,9 @@ Viewing information about movies, filtering movies and adding desired movies to 
 
 Task distributions are shown below(According to <b>Work Plan Table</b>)
 
-- <b>Project manager(Hakan Soytürk):</b> 1, 2, 3, 7, 8, 11
-- <b>Public relations officer(Sinan Göçmez):</b> 1, 2, 4, 7, 9, 12
-- <b>Developer(Miraç Özkan):</b> 1, 2, 3, 5, 6, 10, 11
+- <b>Project manager(Hakan Soytürk):</b> 1, 2, 3, 4, 5, 9, 11
+- <b>Public relations officer(Sinan Göçmez):</b> 1, 2, 3, 5, 10, 12
+- <b>Developer(Miraç Özkan):</b> 1, 2, 3, 5, 6, 7, 8, 11
 
 ## Organization Chart
 
