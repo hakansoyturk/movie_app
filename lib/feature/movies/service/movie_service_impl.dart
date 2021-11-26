@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:movie_app/core/constant.dart';
 import 'package:movie_app/feature/movies/model/movie_response.dart';
 
 import 'movie_service.dart';
@@ -8,7 +9,7 @@ class MovieServiceImpl extends MovieService {
 
   @override
   Future<List<MovieResponse>> fetchMovies() async {
-    final snapshot = databaseRef.child("movies");
+    final snapshot = databaseRef.child(Constant.MOVIES_DB_PATH);
     final List<MovieResponse> movies = [];
     snapshot.once().then((value) {
       List<dynamic> response = value.value;
