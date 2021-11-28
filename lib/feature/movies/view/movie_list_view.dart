@@ -20,7 +20,6 @@ class MovieListView extends StatelessWidget {
         model.init();
       },
       onPageBuilder: (BuildContext context, MovieListViewModel viewModel) => Container(
-        padding: context.paddingLow,
         child: Scaffold(
             backgroundColor: const Color(0xff303030),
             appBar: buildAppBar(),

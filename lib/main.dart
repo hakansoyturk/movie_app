@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -17,15 +17,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: _getProviders(),
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const MovieListView(),
-        ));
+    return MaterialApp(
+      home: Scaffold(
+        body: const Center(child: MovieListView()),
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 0,
+          backgroundColor: const Color(0xff303030),
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Fav"),
+          ],
+          selectedItemColor: Colors.amber[800],
+        ),
+      ),
+    );
   }
 
   List<SingleChildWidget> _getProviders() {
