@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:movie_app/core/constant.dart';
 import 'package:movie_app/feature/movies/model/movie_response.dart';
@@ -16,6 +18,7 @@ class MovieServiceImpl extends MovieService {
       for (var element in response) {
         movies.add(MovieResponse.fromJson(element));
       }
+      return movies;
     });
     return movies;
   }

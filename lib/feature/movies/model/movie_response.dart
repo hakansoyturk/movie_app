@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
 
-List<MovieResponse> movieListFromJson(String str) =>
-    List<MovieResponse>.from(json.decode(str).map((x) => MovieResponse.fromJson(x)));
+List<MovieResponse> movieListFromJson(String str) => List<MovieResponse>.from(
+    json.decode(str).map((x) => MovieResponse.fromJson(x)));
 
-String movieListToJson(List<MovieResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String movieListToJson(List<MovieResponse> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class MovieResponse {
   bool? isAdult;

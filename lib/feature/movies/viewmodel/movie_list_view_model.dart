@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/core/base_view_model.dart';
 import 'package:mobx/mobx.dart';
+import 'package:movie_app/core/base_view_model.dart';
 import 'package:movie_app/feature/movies/model/movie_response.dart';
 import 'package:movie_app/feature/movies/service/movie_service.dart';
 
@@ -13,6 +13,7 @@ abstract class _MovieListViewModel with Store, BaseViewModel {
 
   @observable
   List<MovieResponse> moviesList = [];
+
   @observable
   bool isPageLoading = false;
 

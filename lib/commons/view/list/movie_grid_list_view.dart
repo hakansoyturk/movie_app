@@ -7,7 +7,7 @@ class MovieGridListView extends StatelessWidget {
   const MovieGridListView({Key? key, this.models, this.onPressed}) : super(key: key);
 
   final List<MovieResponse>? models;
-  final void Function(MovieResponse item, int indx)? onPressed;
+  final Function(MovieResponse item, int index)? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,12 @@ class MovieGridListView extends StatelessWidget {
         shrinkWrap: true,
         itemCount: models!.length,
         physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => buildMovieCardView(models![index], context));
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: onPressed!(models![index], index),
+            child: buildMovieCardView(models![index], context),
+          );
+        });
   }
 
   // TODO Extract this view into another file

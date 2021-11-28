@@ -39,6 +39,14 @@ mixin _$MovieListViewModel on _MovieListViewModel, Store {
     });
   }
 
+  final _$_fetchAllMoviesAsyncAction =
+      AsyncAction('_MovieListViewModel._fetchAllMovies');
+
+  @override
+  Future<void> _fetchAllMovies() {
+    return _$_fetchAllMoviesAsyncAction.run(() => super._fetchAllMovies());
+  }
+
   final _$_MovieListViewModelActionController =
       ActionController(name: '_MovieListViewModel');
 

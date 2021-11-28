@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:movie_app/commons/view/list/movie_grid_list_view.dart';
 import 'package:movie_app/core/base_view.dart';
+import 'package:movie_app/feature/movies/model/movie_response.dart';
 import 'package:movie_app/feature/movies/service/movie_service_impl.dart';
 import 'package:movie_app/feature/movies/viewmodel/movie_list_view_model.dart';
 import 'package:movie_app/util/context_ext.dart';
@@ -20,7 +21,10 @@ class MovieListView extends StatelessWidget {
       },
       onPageBuilder: (BuildContext context, MovieListViewModel viewModel) => Container(
         padding: context.paddingLow,
-        child: Scaffold(appBar: buildAppBar(), body: buildObserverMoviesBody(context, viewModel)),
+        child: Scaffold(
+            backgroundColor: const Color(0xff303030),
+            appBar: buildAppBar(),
+            body: buildObserverMoviesBody(context, viewModel)),
       ),
     );
   }
@@ -29,7 +33,8 @@ class MovieListView extends StatelessWidget {
     return Observer(builder: (_) {
       return viewModel.isPageLoading
           ? SizedBox(
-              height: context.dynamicHeight(0.1), child: Align(alignment: Alignment.center, child: buildCenterLoading()))
+              height: context.dynamicHeight(0.1),
+              child: Align(alignment: Alignment.center, child: buildCenterLoading()))
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,10 +42,16 @@ class MovieListView extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Text(
                     "Recently Released",
-                    style: TextStyle(fontSize: 24, fontFamily: "Open Sans", fontWeight: FontWeight.w300),
+                    style: TextStyle(
+                        fontSize: 24, fontFamily: "Open Sans", color: Colors.white, fontWeight: FontWeight.w300),
                   ),
                   const SizedBox(height: 16),
-                  MovieGridListView(models: viewModel.moviesList),
+                  MovieGridListView(
+                    models: viewModel.moviesList,
+                    onPressed: (MovieResponse item, int index) {
+                      // TODO Navigate to detail
+                    },
+                  ),
                 ],
               ),
             );
@@ -53,8 +64,7 @@ class MovieListView extends StatelessWidget {
         alignment: Alignment.center,
         child: Text("Movies"),
       ),
-      backgroundColor: Colors.transparent,
-      elevation: 2,
+      backgroundColor: const Color(0xff303030),
       actions: [IconButton(icon: const Icon(Icons.filter), onPressed: () {})],
     );
   }
