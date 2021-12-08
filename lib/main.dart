@@ -1,10 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
 import 'feature/movies/view/movie_list_view.dart';
-import 'util/theme_notifier.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,13 +28,5 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<SingleChildWidget> _getProviders() {
-    return [
-      ChangeNotifierProvider(
-        create: (context) => ThemeNotifier(),
-      ),
-    ];
   }
 }
