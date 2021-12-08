@@ -14,26 +14,28 @@ class MovieListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<MovieListViewModel>(
-      viewModel: MovieListViewModel(MovieServiceImpl(FirebaseDatabase.instance.reference())),
+      viewModel: MovieListViewModel(
+          MovieServiceImpl(FirebaseDatabase.instance.reference())),
       onModelReady: (model) {
         model.setContext(context);
         model.init();
       },
-      onPageBuilder: (BuildContext context, MovieListViewModel viewModel) => Container(
-        child: Scaffold(
-            backgroundColor: const Color(0xff303030),
-            appBar: buildAppBar(),
-            body: buildObserverMoviesBody(context, viewModel)),
-      ),
+      onPageBuilder: (BuildContext context, MovieListViewModel viewModel) =>
+          Scaffold(
+              backgroundColor: const Color(0xff303030),
+              appBar: buildAppBar(context, viewModel),
+              body: buildObserverMoviesBody(context, viewModel)),
     );
   }
 
-  Observer buildObserverMoviesBody(BuildContext context, MovieListViewModel viewModel) {
+  Observer buildObserverMoviesBody(
+      BuildContext context, MovieListViewModel viewModel) {
     return Observer(builder: (_) {
       return viewModel.isPageLoading
           ? SizedBox(
               height: context.dynamicHeight(0.1),
-              child: Align(alignment: Alignment.center, child: buildCenterLoading()))
+              child: Align(
+                  alignment: Alignment.center, child: buildCenterLoading()))
           : SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,11 +44,14 @@ class MovieListView extends StatelessWidget {
                   const Text(
                     "Recently Released",
                     style: TextStyle(
-                        fontSize: 24, fontFamily: "Open Sans", color: Colors.white, fontWeight: FontWeight.w300),
+                        fontSize: 24,
+                        fontFamily: "Open Sans",
+                        color: Colors.white,
+                        fontWeight: FontWeight.w300),
                   ),
                   const SizedBox(height: 16),
                   MovieGridListView(
-                    models: viewModel.moviesList,
+                    models: viewModel.filteredList,
                     onPressed: (MovieResponse item, int index) {
                       // TODO Navigate to detail
                     },
@@ -57,16 +62,47 @@ class MovieListView extends StatelessWidget {
     });
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context, MovieListViewModel viewModel) {
     return AppBar(
       title: const Align(
         alignment: Alignment.center,
         child: Text("Movies"),
       ),
       backgroundColor: const Color(0xff303030),
-      actions: [IconButton(icon: const Icon(Icons.filter), onPressed: () {})],
+      actions: [
+        IconButton(
+            icon: const Icon(Icons.filter),
+            onPressed: () {
+              showModalBottomSheet(
+                  backgroundColor: const Color(0xff303030),
+                  context: context,
+                  builder: (context) => buildGenresList(viewModel));
+            })
+      ],
     );
   }
 
-  Center buildCenterLoading() => const Center(child: CircularProgressIndicator.adaptive());
+  ListView buildGenresList(MovieListViewModel viewModel) {
+    return ListView.builder(
+        itemCount: viewModel.genresList.length,
+        itemBuilder: (context, index) => MaterialButton(
+            color: const Color(0xff303030),
+            height: context.dynamicHeight(0.08),
+            child: Text(
+              viewModel.genresList[index].name!,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontFamily: "Public Sans",
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            onPressed: () {
+              viewModel
+                  .filterList(viewModel.filteredList[index].genreIds!.first);
+            }));
+  }
+
+  Center buildCenterLoading() =>
+      const Center(child: CircularProgressIndicator.adaptive());
 }
