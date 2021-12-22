@@ -5,23 +5,33 @@ import 'package:movie_app/core/constant.dart';
 import 'package:movie_app/feature/movies/model/genre_response.dart';
 import 'package:movie_app/feature/movies/model/movie_response.dart';
 import 'package:movie_app/feature/movies/service/movie_service.dart';
+import 'package:movie_app/util/store_state.dart';
 
 part 'movie_list_view_model.g.dart';
 
-class MovieListViewModel = _MovieListViewModel with _$MovieListViewModel;
+class MovieListViewModel extends _MovieListViewModel with _$MovieListViewModel {
+  MovieListViewModel(MovieService movieService) : super(movieService);
+}
 
 abstract class _MovieListViewModel with Store, BaseViewModel {
   final MovieService _movieService;
 
-  List<MovieResponse> moviesList = [];
+  _MovieListViewModel(this._movieService);
+
+  @observable
+  ObservableFuture<List<MovieResponse>>? _observableMovieList;
+
+  @observable
+  List<MovieResponse> _movies = [];
+
   @observable
   List<MovieResponse> filteredList = [];
+
   @observable
   List<GenreResponse> genresList = [];
+
   @observable
   bool isPageLoading = false;
-
-  _MovieListViewModel(this._movieService);
 
   @override
   void setContext(BuildContext? context) => this.context = context;
@@ -33,36 +43,41 @@ abstract class _MovieListViewModel with Store, BaseViewModel {
   }
 
   @action
-  Future<void> _fetchAllMovies() async {
-    _changeLoading();
-    final response = await _movieService.fetchMovies();
-    moviesList = response;
-    filteredList = response;
-    _changeLoading();
+  Future _fetchAllMovies() async {
+    _observableMovieList = ObservableFuture(_movieService.fetchMovies());
+    _movies = await _observableMovieList!;
+    filteredList = _movies;
   }
 
   @action
-  Future<void> _fetchAllGenres() async {
+  Future _fetchAllGenres() async {
     final response = await _movieService.fetchGenres();
     genresList = response;
   }
 
   @action
   void filterList(int genreId) {
-    _changeLoading();
     if (genreId == Constant.ALL_GENRES_ID) {
-      filteredList = moviesList;
-      _changeLoading();
+      filteredList = _movies;
       return;
     }
-    filteredList = moviesList
+    filteredList = _movies
         .where((element) => element.genreIds!.contains(genreId))
         .toList();
-    _changeLoading();
   }
 
-  @action
-  void _changeLoading() {
-    isPageLoading = !isPageLoading;
+  @computed
+  StoreState get state {
+    if (_observableMovieList == null ||
+        _observableMovieList!.status == FutureStatus.rejected) {
+      return StoreState.initial;
+    }
+    return _observableMovieList!.status == FutureStatus.pending
+        ? StoreState.loading
+        : StoreState.loaded;
+  }
+
+  void navigateToDetail(MovieResponse movieResponse) {
+    navigation.navigateToPage(path: "/detail", data: movieResponse);
   }
 }

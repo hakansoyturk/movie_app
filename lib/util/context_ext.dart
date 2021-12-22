@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 extension ContextExtension on BuildContext {
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
-  double dynamicHeight(double value) =>
-      MediaQuery.of(this).size.height * value;
-  double dynamicWidth(double value) =>
-      MediaQuery.of(this).size.width * value;
+  double dynamicHeight(double value) => MediaQuery.of(this).size.height * value;
+
+  double dynamicWidth(double value) => MediaQuery.of(this).size.width * value;
 }
 
 extension MediaQueryExtension on BuildContext {

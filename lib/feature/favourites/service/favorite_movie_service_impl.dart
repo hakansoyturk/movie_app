@@ -3,21 +3,21 @@ import 'package:movie_app/core/constant.dart';
 import 'package:movie_app/feature/movies/model/genre_response.dart';
 import 'package:movie_app/feature/movies/model/movie_response.dart';
 
-import 'movie_service.dart';
+import 'favorite_movie_service.dart';
 
-class MovieServiceImpl extends MovieService {
-  MovieServiceImpl(DatabaseReference databaseRef) : super(databaseRef);
+class FavoriteMovieServiceImpl extends FavoriteMovieService {
+  FavoriteMovieServiceImpl(DatabaseReference databaseRef) : super(databaseRef);
 
   @override
-  Future<List<MovieResponse>> fetchMovies() async {
-    final snapshot = databaseRef.child(Constant.MOVIES_DB_PATH);
+  Future<List<MovieResponse>> fetchFavoriteMovies(String uid) async {
+    final snapshot = databaseRef.child(Constant.USERS_PATH);
+    final favSnapshot = snapshot.child(uid);
     final List<MovieResponse> movies = [];
-    snapshot.once().then((value) {
-      List<dynamic> response = value.value;
-      for (var element in response) {
-        movies.add(MovieResponse.fromJson(element));
+    favSnapshot.once().then((value) {
+      Map<dynamic, dynamic> response = value.value;
+      for (var element in response.entries) {
+        movies.add(MovieResponse.fromJson(element.value));
       }
-      return movies;
     });
     return movies;
   }

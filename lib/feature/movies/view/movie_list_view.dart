@@ -7,6 +7,7 @@ import 'package:movie_app/feature/movies/model/movie_response.dart';
 import 'package:movie_app/feature/movies/service/movie_service_impl.dart';
 import 'package:movie_app/feature/movies/viewmodel/movie_list_view_model.dart';
 import 'package:movie_app/util/context_ext.dart';
+import 'package:movie_app/util/store_state.dart';
 
 class MovieListView extends StatelessWidget {
   const MovieListView({Key? key}) : super(key: key);
@@ -31,12 +32,11 @@ class MovieListView extends StatelessWidget {
   Observer buildObserverMoviesBody(
       BuildContext context, MovieListViewModel viewModel) {
     return Observer(builder: (_) {
-      return viewModel.isPageLoading
-          ? SizedBox(
-              height: context.dynamicHeight(0.1),
-              child: Align(
-                  alignment: Alignment.center, child: buildCenterLoading()))
-          : SingleChildScrollView(
+      switch (viewModel.state) {
+        case StoreState.loaded:
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,14 +51,17 @@ class MovieListView extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   MovieGridListView(
-                    models: viewModel.filteredList,
-                    onPressed: (MovieResponse item, int index) {
-                      // TODO Navigate to detail
-                    },
-                  ),
+                      models: viewModel.filteredList,
+                      onPressed: (MovieResponse item, int index) {
+                        viewModel.navigateToDetail(item);
+                      })
                 ],
               ),
-            );
+            ),
+          );
+        default:
+          return buildCenterLoading();
+      }
     });
   }
 
