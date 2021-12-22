@@ -9,6 +9,46 @@ part of 'movie_list_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MovieListViewModel on _MovieListViewModel, Store {
+  Computed<StoreState>? _$stateComputed;
+
+  @override
+  StoreState get state =>
+      (_$stateComputed ??= Computed<StoreState>(() => super.state,
+              name: '_MovieListViewModel.state'))
+          .value;
+
+  final _$_observableMovieListAtom =
+      Atom(name: '_MovieListViewModel._observableMovieList');
+
+  @override
+  ObservableFuture<List<MovieResponse>>? get _observableMovieList {
+    _$_observableMovieListAtom.reportRead();
+    return super._observableMovieList;
+  }
+
+  @override
+  set _observableMovieList(ObservableFuture<List<MovieResponse>>? value) {
+    _$_observableMovieListAtom.reportWrite(value, super._observableMovieList,
+        () {
+      super._observableMovieList = value;
+    });
+  }
+
+  final _$_moviesAtom = Atom(name: '_MovieListViewModel._movies');
+
+  @override
+  List<MovieResponse> get _movies {
+    _$_moviesAtom.reportRead();
+    return super._movies;
+  }
+
+  @override
+  set _movies(List<MovieResponse> value) {
+    _$_moviesAtom.reportWrite(value, super._movies, () {
+      super._movies = value;
+    });
+  }
+
   final _$filteredListAtom = Atom(name: '_MovieListViewModel.filteredList');
 
   @override
@@ -58,7 +98,7 @@ mixin _$MovieListViewModel on _MovieListViewModel, Store {
       AsyncAction('_MovieListViewModel._fetchAllMovies');
 
   @override
-  Future<void> _fetchAllMovies() {
+  Future<dynamic> _fetchAllMovies() {
     return _$_fetchAllMoviesAsyncAction.run(() => super._fetchAllMovies());
   }
 
@@ -66,7 +106,7 @@ mixin _$MovieListViewModel on _MovieListViewModel, Store {
       AsyncAction('_MovieListViewModel._fetchAllGenres');
 
   @override
-  Future<void> _fetchAllGenres() {
+  Future<dynamic> _fetchAllGenres() {
     return _$_fetchAllGenresAsyncAction.run(() => super._fetchAllGenres());
   }
 
@@ -85,22 +125,12 @@ mixin _$MovieListViewModel on _MovieListViewModel, Store {
   }
 
   @override
-  void _changeLoading() {
-    final _$actionInfo = _$_MovieListViewModelActionController.startAction(
-        name: '_MovieListViewModel._changeLoading');
-    try {
-      return super._changeLoading();
-    } finally {
-      _$_MovieListViewModelActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 filteredList: ${filteredList},
 genresList: ${genresList},
-isPageLoading: ${isPageLoading}
+isPageLoading: ${isPageLoading},
+state: ${state}
     ''';
   }
 }

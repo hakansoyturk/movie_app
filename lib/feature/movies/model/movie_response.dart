@@ -1,15 +1,17 @@
 import 'dart:convert';
 
-List<MovieResponse> movieListFromJson(String str) => List<MovieResponse>.from(
-    json.decode(str).map((x) => MovieResponse.fromJson(x)));
+import 'package:floor/floor.dart';
 
-String movieListToJson(List<MovieResponse> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+List<MovieResponse> movieListFromJson(String str) =>
+    List<MovieResponse>.from(json.decode(str).map((x) => MovieResponse.fromJson(x)));
 
+String movieListToJson(List<MovieResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+@entity
 class MovieResponse {
   bool? isAdult;
   String? backdropPath;
-  List? genreIds;
+  @primaryKey
   int? id;
   String? originalLanguage;
   String? originalTitle;
@@ -21,22 +23,24 @@ class MovieResponse {
   bool? hasVideo;
   num? voteAverage;
   int? voteCount;
+  List? genreIds;
 
-  MovieResponse(
-      {this.isAdult,
-      this.backdropPath,
-      this.genreIds,
-      this.id,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.releaseDate,
-      this.title,
-      this.hasVideo,
-      this.voteAverage,
-      this.voteCount});
+  MovieResponse({
+    this.isAdult,
+    this.backdropPath,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.releaseDate,
+    this.title,
+    this.hasVideo,
+    this.voteAverage,
+    this.voteCount,
+    this.genreIds,
+  });
 
   factory MovieResponse.fromJson(Map<dynamic, dynamic> json) => MovieResponse(
       isAdult: json['adult'] as bool?,
@@ -54,7 +58,7 @@ class MovieResponse {
       voteAverage: json['vote_average'] as num?,
       voteCount: json['vote_count'] as int?);
 
-  Map<dynamic, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         'adult': isAdult,
         'backdrop_path': backdropPath,
         'genre_ids': genreIds,
