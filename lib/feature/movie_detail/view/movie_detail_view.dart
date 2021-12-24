@@ -75,6 +75,7 @@ class MovieDetailView extends StatelessWidget {
                                       : const Icon(Icons.delete),
                                   onPressed: () {
                                     viewModel.changeFavState(movieResponse);
+                                    viewModel.isAddedToFavorite(movieResponse);
                                   }))
                         ]))));
   }

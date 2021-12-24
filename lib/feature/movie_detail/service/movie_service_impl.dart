@@ -9,15 +9,12 @@ class MovieDetailServiceImpl extends MovieDetailService {
 
   @override
   Future<bool> isFavorite(MovieResponse movieResponse, String uid) async {
-    bool isFavorite = false;
-    final snapshot = databaseRef
+    return databaseRef
         .child(Constant.USERS_PATH)
         .child(uid)
-        .child(movieResponse.id.toString());
-    snapshot.onValue.listen((event) {
-      isFavorite = event.snapshot.exists;
-    });
-    return isFavorite;
+        .child(movieResponse.id.toString())
+        .once()
+        .then((value) => value.exists);
   }
 
   @override

@@ -1,5 +1,9 @@
 import 'package:floor/floor.dart';
 
+List<GenreResponse> genreListFromJson(List<dynamic> list) =>
+    List<GenreResponse>.from(
+        list.map((element) => GenreResponse.fromJson(element)));
+
 @entity
 class GenreResponse {
   @entity
