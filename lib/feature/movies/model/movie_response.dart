@@ -1,11 +1,12 @@
-import 'dart:convert';
-
 import 'package:floor/floor.dart';
 
-List<MovieResponse> movieListFromJson(String str) =>
-    List<MovieResponse>.from(json.decode(str).map((x) => MovieResponse.fromJson(x)));
+List<MovieResponse> movieListFromJson(List<dynamic> list) =>
+    List<MovieResponse>.from(
+        list.map((element) => MovieResponse.fromJson(element)));
 
-String movieListToJson(List<MovieResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+List<MovieResponse> movieListFromMapJson(Map<dynamic, dynamic> map) =>
+    List<MovieResponse>.from(
+        map.entries.map((e) => MovieResponse.fromJson(e.value)));
 
 @entity
 class MovieResponse {

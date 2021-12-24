@@ -10,16 +10,10 @@ class MovieServiceImpl extends MovieService {
 
   @override
   Future<List<MovieResponse>> fetchMovies() async {
-    final snapshot = databaseRef.child(Constant.MOVIES_DB_PATH);
-    final List<MovieResponse> movies = [];
-    snapshot.once().then((value) {
-      List<dynamic> response = value.value;
-      for (var element in response) {
-        movies.add(MovieResponse.fromJson(element));
-      }
-      return movies;
-    });
-    return movies;
+    return databaseRef
+        .child(Constant.MOVIES_DB_PATH)
+        .once()
+        .then((value) => movieListFromJson(value.value));
   }
 
   @override

@@ -10,16 +10,11 @@ class FavoriteMovieServiceImpl extends FavoriteMovieService {
 
   @override
   Future<List<MovieResponse>> fetchFavoriteMovies(String uid) async {
-    final snapshot = databaseRef.child(Constant.USERS_PATH);
-    final favSnapshot = snapshot.child(uid);
-    final List<MovieResponse> movies = [];
-    favSnapshot.once().then((value) {
-      Map<dynamic, dynamic> response = value.value;
-      for (var element in response.entries) {
-        movies.add(MovieResponse.fromJson(element.value));
-      }
-    });
-    return movies;
+    return databaseRef
+        .child(Constant.USERS_PATH)
+        .child(uid)
+        .once()
+        .then((value) => movieListFromMapJson(value.value));
   }
 
   @override
