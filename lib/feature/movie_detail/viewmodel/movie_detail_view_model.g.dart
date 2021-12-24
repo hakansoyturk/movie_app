@@ -12,13 +12,13 @@ mixin _$MovieDetailViewModel on _MovieDetailViewModel, Store {
   final _$isFavoriteAtom = Atom(name: '_MovieDetailViewModel.isFavorite');
 
   @override
-  bool get isFavorite {
+  bool? get isFavorite {
     _$isFavoriteAtom.reportRead();
     return super.isFavorite;
   }
 
   @override
-  set isFavorite(bool value) {
+  set isFavorite(bool? value) {
     _$isFavoriteAtom.reportWrite(value, super.isFavorite, () {
       super.isFavorite = value;
     });
