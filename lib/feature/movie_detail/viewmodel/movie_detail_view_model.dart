@@ -16,7 +16,7 @@ abstract class _MovieDetailViewModel with Store, BaseViewModel {
   _MovieDetailViewModel(this._movieDetailService);
 
   @observable
-  bool isFavorite = false;
+  bool? isFavorite;
 
   @override
   void init() {}
@@ -27,7 +27,7 @@ abstract class _MovieDetailViewModel with Store, BaseViewModel {
   @action
   Future<void> changeFavState(MovieResponse movieResponse) async {
     _movieDetailService.changeFavState(movieResponse, uid);
-    isAddedToFavorite(movieResponse);
+    isFavorite = !(isFavorite ?? false);
   }
 
   @action

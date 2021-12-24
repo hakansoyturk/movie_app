@@ -19,8 +19,11 @@ class MovieDetailServiceImpl extends MovieDetailService {
 
   @override
   Future<void> changeFavState(MovieResponse movieResponse, String uid) async {
-    final snapshot = databaseRef.child(Constant.USERS_PATH).child(uid);
-    snapshot.child(movieResponse.id.toString()).once().then((value) {
+    final snapshot = databaseRef
+        .child(Constant.USERS_PATH)
+        .child(uid)
+        .child(movieResponse.id.toString());
+    snapshot.once().then((value) {
       if (value.exists) {
         snapshot.child(movieResponse.id.toString()).remove();
       } else {
