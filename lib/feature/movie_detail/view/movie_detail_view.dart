@@ -70,7 +70,7 @@ class MovieDetailView extends StatelessWidget {
                           ),
                           Observer(
                               builder: (_) => FloatingActionButton(
-                                  child: viewModel.isFavorite ?? false
+                                  child: viewModel.isFavorite ?? true
                                       ? const Icon(Icons.delete)
                                       : const Icon(Icons.add),
                                   onPressed: () {

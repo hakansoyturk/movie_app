@@ -25,11 +25,9 @@ class MovieDetailServiceImpl extends MovieDetailService {
         .child(movieResponse.id.toString());
     snapshot.once().then((value) {
       if (value.exists) {
-        snapshot.child(movieResponse.id.toString()).remove();
+        snapshot.remove();
       } else {
-        snapshot
-            .child(movieResponse.id.toString())
-            .update(movieResponse.toJson());
+        snapshot.set(movieResponse.toJson());
       }
     });
   }
